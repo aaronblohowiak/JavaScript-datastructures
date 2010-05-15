@@ -13,6 +13,7 @@
 //
 //  options is an object that may contain the following:
 //    sweepFrequency (default:  Math.min(100, timeToLive / 2); )
+//
 
 
 var ExpiringCollection = function(timeToLive, options){
