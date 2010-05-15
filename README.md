@@ -1,5 +1,3 @@
-Send me your patches and pull requests.
-
 I found myself re-writting the same basic JavaScript datastructures in various different projects, so I decided to store the barebones implementations here for the world.
 
 Data Structures:
@@ -15,5 +13,11 @@ Data Structures:
   This supports the error, value parameter pattern that is common for node callbacks.
   Further, this is built on expiring-collection so you get timed expiration "for free"
   
+  * there is a synch version of read-through-cache without expiration.
+  
+  * We also have an expiring queue which is like expiring collection except for a simple queue.
+  
   
 Dual-Licensed under the MIT and GPL (you may use it under either.)
+
+Send me your patches and pull requests!

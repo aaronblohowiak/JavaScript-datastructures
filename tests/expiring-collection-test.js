@@ -25,7 +25,7 @@ var expiringCollectionTest = function() {
 
 	this.methodsDefined = function() {
 		ec = anEC();
-		methods = "get set expire";
+		methods = "get set expire stopExpirationTimeout startExpirationTimeout";
 		methods.split(' ').forEach(function(e) {
 			assert(typeof(ec[e]) === "function", "ExpiringCollection should have a " + e + " function");
 		});
