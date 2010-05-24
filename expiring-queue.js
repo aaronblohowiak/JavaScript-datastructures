@@ -36,7 +36,7 @@ var ExpiringQueue = function(timeToLive, options){
 };
 
 ExpiringQueue.prototype = {
-  get: function(key){
+  get: function(){
     return this.cache;
   },
   

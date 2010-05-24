@@ -17,7 +17,8 @@ Data Structures:
   
   * We also have an expiring queue which is like expiring collection except for a simple queue.
   
-  
 Dual-Licensed under the MIT and GPL (you may use it under either.)
 
 Send me your patches and pull requests!
+
+tested with Node v0.1.95

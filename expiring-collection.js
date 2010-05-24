@@ -42,34 +42,36 @@ var ExpiringCollection = function(timeToLive, options){
 };
 
 ExpiringCollection.prototype = {
+  prefix :'prefix_',
+  
   get: function(key){
-    return this.cache[key];
+    return this.cache[this.prefix+key];
   },
   
   set: function(key, value){
     now = (new Date).getTime();
-    this.cache[key] = value;
+    this.cache[this.prefix+key] = value;
     
     //clear any old expirations for this key
     //  and then create a new one, and cache its index
     this.nullifyExpiration(key);
     var expires = now + this.ttl;
     this.expirations.push([expires, key]);
-    this.keysExpirations[key] = this.expirations.length - 1;
+    this.keysExpirations[this.prefix+key] = this.expirations.length - 1;
     
     return this;
   },
 
   expire: function(key){
-    this.cache[key] = undefined;
+    this.cache[this.prefix+key] = undefined;
     this.nullifyExpiration(key);
   },
   
   nullifyExpiration: function(key){
     //set the key of the old expiration to null
     //  we'll check for null keys when we sweep.
-    if(typeof(this.keysExpirations[key]) === "number"){
-      var expiration = this.expirations[this.keysExpirations[key]];
+    if(typeof(this.keysExpirations[this.prefix+key]) === "number"){
+      var expiration = this.expirations[this.keysExpirations[this.prefix+key]];
       expiration[1] = null; 
     }
   },

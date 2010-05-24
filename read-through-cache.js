@@ -35,7 +35,7 @@
 //
 //  On error, we notify all listeners and clear the queue.
 //  This means that the next request will retry, IE: errors arent cached.
-var ExpiringCollection = require("./expiring-collection").ExpiringCollection,
+var ExpiringCollection = require("expiring-collection").ExpiringCollection,
 	sys = require("sys");
 
 var ReadThroughCache = function(keyToValue, timeToLive) {
@@ -59,19 +59,19 @@ ReadThroughCache.prototype = {
 		};
 
 		//return it if we got it
-		if (this.expiring_collection[key]) {
-			callback(null, this.expiring_collection[key]);
+		if (this.expiring_collection.get(key)) {
+			callback(null, this.expiring_collection.get(key));
 			return;
 		}
 
 		//get in line for results if there is a line
-		if (this.observers[key]) {
-			this.observers[key].push(callback);
+		if (this.observers[this.prefix+key]) {
+			this.observers[this.prefix+key].push(callback);
 			return;
 		}
 
 		//otherwise, form a new line with just me and kick off the asynch job
-		this.observers[key] = [callback];
+		this.observers[this.prefix+key] = [callback];
 		this.keyToValue(key, this);
 	},
 
@@ -81,13 +81,13 @@ ReadThroughCache.prototype = {
 	},
 
 	notifyObservers: function(key, error, value) {
-		var listeners = this.observers[key];
+		var listeners = this.observers[this.prefix+key];
 		if (listeners && listeners.length) {
 			for (var i = 0, l = listeners.length; i < l; i++) {
 				listeners[i](error, value);
 			}
 
-			this.observers[key] = false;
+			this.observers[this.prefix+key] = false;
 		}
 	},
 

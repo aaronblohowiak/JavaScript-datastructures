@@ -36,6 +36,10 @@ var ExpiringQueueTest = function() {
     eq = new ExpiringQueue(defaultTimeToLive);
     eq.push("jack")
     eq.push("hit the road");
+    eq.push("hit the road");
+    eq.push("hit the road");
+    assert(eq.get().length === 4, "multi-push works");
+    
     setTimeout(function(){
         assert(eq.get().length === 0, "delayed expiration works");
         eq.stopExpirationTimeout();
